@@ -55,6 +55,31 @@
 #include "../../utils/network_cache.hpp"
 #include "traits.hpp"
 
+#if defined( __APPLE__ )
+#include <AvailabilityMacros.h>
+#endif
+#if defined( __APPLE__ ) && defined( __MAC_OS_X_VERSION_MIN_REQUIRED ) && ( __MAC_OS_X_VERSION_MIN_REQUIRED < 101500 )
+#include <cerrno>
+#include <sys/stat.h>
+// avoid std::filesystem calls that are 10.15+ in libc++
+namespace mockturtle::detail
+{
+inline bool fs_exists( std::string const& p ) noexcept
+{
+  struct stat st;
+  return ::stat( p.c_str(), &st ) == 0;
+}
+} // namespace mockturtle::detail
+#else
+namespace mockturtle::detail
+{
+inline bool fs_exists( std::string const& p ) noexcept
+{
+  return std::filesystem::exists( p );
+}
+} // namespace mockturtle::detail
+#endif
+
 namespace mockturtle
 {
 
@@ -282,7 +307,7 @@ private:
 
     // make a backup of existing cache file, if it exists
     std::string _backup_filename = fmt::format( "{}.bak", _cache_filename );
-    if ( fs::exists( _cache_filename ) )
+    if ( detail::fs_exists( _cache_filename ) )
     {
       fs::copy( _cache_filename, _backup_filename );
     }
@@ -291,7 +316,7 @@ private:
     os << data.dump() << "\n";
     os.close();
 
-    if ( fs::exists( _backup_filename ) )
+    if ( detail::fs_exists( _backup_filename ) )
     {
       fs::remove( _backup_filename );
     }

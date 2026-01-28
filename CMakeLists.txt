@@ -1,15 +1,12 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.24)
 project(mockturtle LANGUAGES CXX)
 
-set(MOCKTURTLE_CXX_STANDARD
-    "20"
-    CACHE STRING "C++ standard")
-set(CMAKE_CXX_STANDARD ${MOCKTURTLE_CXX_STANDARD})
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Options
-option(MOCKTURTLE_BUILD_EXAMPLES "Build mockturtle examples" ON)
-option(MOCKTURTLE_BUILD_TESTS "Build mockturtle tests" ON)
+option(MOCKTURTLE_BUILD_EXAMPLES "Build mockturtle examples" OFF)
+option(MOCKTURTLE_BUILD_TESTS "Build mockturtle tests" OFF)
 option(MOCKTURTLE_BUILD_EXPERIMENTS "Build mockturtle experiments" OFF)
 option(BILL_Z3 "Enable Z3 interface for bill library" OFF)
 option(MOCKTURTLE_ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" OFF)

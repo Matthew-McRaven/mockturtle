@@ -37,6 +37,8 @@
 #include <fmt/format.h>
 #include <iostream>
 #include <map>
+#include <string>
+#include <vector>
 
 namespace lorina
 {
