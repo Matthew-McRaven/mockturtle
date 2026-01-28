@@ -228,8 +228,12 @@ public:
 
   virtual void on_latch( const std::string& input, const std::string& output, const std::optional<latch_type>& type, const std::optional<std::string>& control, const std::optional<latch_init_value>& init_value ) const
   {
+    using UT = std::underlying_type_t<lorina::blif_reader::latch_type>;
+    using UV = std::underlying_type_t<lorina::blif_reader::latch_init_value>;
     _os << fmt::format( "\n.latch {0} {1} {2} {3} {4}", input, output,
-                        ( type ? *type : latch_type::NONE ), ( control ? *control : "" ), ( init_value ? *init_value : latch_init_value::UNKNOWN ) ) << std::endl;
+                        UT( type ? *type : latch_type::NONE ), ( control ? *control : "" ),
+                        UV( init_value ? *init_value : latch_init_value::UNKNOWN ) )
+        << std::endl;
   }
 
   virtual void on_gate( const std::vector<std::string>& inputs, const std::string& output, const output_cover_t& cover ) const

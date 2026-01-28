@@ -39,6 +39,8 @@
 #include "detail/utils.hpp"
 #include "diagnostics.hpp"
 #include "verilog_regex.hpp"
+#include <fmt/format.h>
+#include <fmt/ranges.h>
 #include <iostream>
 #include <queue>
 

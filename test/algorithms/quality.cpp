@@ -39,9 +39,13 @@
 
 using namespace mockturtle;
 
-template<class Ntk, class Fn, class Ret = std::result_of_t<Fn( Ntk&, int )>>
-std::vector<Ret> foreach_benchmark( Fn&& fn )
+template<class Ntk, class Fn>
+requires std::invocable<Fn, Ntk&, int>
+using RetT = std::invoke_result_t<Fn, Ntk&, int>;
+template<class Ntk, class Fn>
+std::vector<RetT<Ntk, Fn>> foreach_benchmark( Fn&& fn )
 {
+  using Ret = RetT<Ntk, Fn>;
   std::vector<Ret> v;
   for ( auto const& id : { 17, 432, 499, 880, 1355, 1908, 2670, 3540, 5315, 6288, 7552 } )
   {

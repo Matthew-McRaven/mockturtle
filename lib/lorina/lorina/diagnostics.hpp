@@ -33,10 +33,10 @@
 #pragma once
 
 #include <cassert>
+#include <fmt/color.h>
+#include <fmt/format.h>
 #include <iostream>
 #include <map>
-#include <fmt/format.h>
-#include <fmt/color.h>
 
 namespace lorina
 {
@@ -266,13 +266,13 @@ inline void diagnostic_engine::emit_static_diagnostic( diag_id id, std::vector<s
   switch ( args.size() )
   {
   case 1:
-    client_->handle_diagnostic( level, fmt::format( message, args[0] ) );
+    client_->handle_diagnostic( level, fmt::format( fmt::runtime( message ), args[0] ) );
     break;
   case 2:
-    client_->handle_diagnostic( level, fmt::format( message, args[0], args[1] ) );
+    client_->handle_diagnostic( level, fmt::format( fmt::runtime( message ), args[0], args[1] ) );
     break;
   case 3:
-    client_->handle_diagnostic( level, fmt::format( message, args[0], args[1], args[2] ) );
+    client_->handle_diagnostic( level, fmt::format( fmt::runtime( message ), args[0], args[1], args[2] ) );
     break;
   default:
   case 0:
@@ -290,13 +290,13 @@ inline void diagnostic_engine::emit_custom_diagnostic( diag_id id, std::vector<s
   switch ( args.size() )
   {
   case 1:
-    client_->handle_diagnostic( level, fmt::format( message, args[0] ) );
+    client_->handle_diagnostic( level, fmt::format( fmt::runtime( message ), args[0] ) );
     break;
   case 2:
-    client_->handle_diagnostic( level, fmt::format( message, args[0], args[1] ) );
+    client_->handle_diagnostic( level, fmt::format( fmt::runtime( message ), args[0], args[1] ) );
     break;
   case 3:
-    client_->handle_diagnostic( level, fmt::format( message, args[0], args[1], args[2] ) );
+    client_->handle_diagnostic( level, fmt::format( fmt::runtime( message ), args[0], args[1], args[2] ) );
     break;
   default:
   case 0:
